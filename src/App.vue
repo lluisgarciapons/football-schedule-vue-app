@@ -1,31 +1,53 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+<v-app>
+  <div id="app" :class="{loading_stage: loading}">
+    <template v-if="loading">
+      <app-loading></app-loading>
+    </template>
+    <template v-else>
+    <app-header></app-header>
+    <router-view>
+    </router-view>
+    </template>
   </div>
+  </v-app>
 </template>
+<script>
+/* eslint-disable */
+import Header from "./components/Header";
+import Loading from "./components/Loading";
+export default {
+  components: {
+    "app-header": Header,
+    "app-loading": Loading
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    loading() {
+      return this.$store.getters.getLoading;
+      // return true;
+    }
+  }
+};
+</script>
+
 
 <style>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
+  font-family: "Nunito", sans-serif;
+  background-color: white;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.loading_stage {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.page {
+  margin-top: 56px;
 }
 </style>
